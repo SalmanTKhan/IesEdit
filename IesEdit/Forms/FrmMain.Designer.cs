@@ -93,13 +93,13 @@
 			// 
 			this.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnOpen,
-            this.BtnSave,
-            this.toolStripSeparator1,
-            this.BtnUndo,
-            this.BtnRedo,
-            this.toolStripSeparator2,
-            this.BtnSearch});
+			this.BtnOpen,
+			this.BtnSave,
+			this.toolStripSeparator1,
+			this.BtnUndo,
+			this.BtnRedo,
+			this.toolStripSeparator2,
+			this.BtnSearch});
 			this.ToolStrip.Location = new System.Drawing.Point(0, 0);
 			this.ToolStrip.Name = "ToolStrip";
 			this.ToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -207,8 +207,8 @@
 			// StatusStrip
 			// 
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LblCurLine,
-            this.LblCurCol});
+			this.LblCurLine,
+			this.LblCurCol});
 			this.StatusStrip.Location = new System.Drawing.Point(0, 668);
 			this.StatusStrip.Name = "StatusStrip";
 			this.StatusStrip.Size = new System.Drawing.Size(1052, 24);
@@ -222,20 +222,20 @@
 			// MainMenu
 			// 
 			this.MainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem1,
-            this.menuItem3,
-            this.menuItem2});
+			this.menuItem1,
+			this.menuItem3,
+			this.menuItem2});
 			// 
 			// menuItem1
 			// 
 			this.menuItem1.Index = 0;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.MnuOpen,
-            this.MnuSave,
-            this.MnuSaveAsIes,
-            this.MnuSaveAsXml,
-            this.menuItem5,
-            this.MnuExit});
+			this.MnuOpen,
+			this.MnuSave,
+			this.MnuSaveAsIes,
+			this.MnuSaveAsXml,
+			this.menuItem5,
+			this.MnuExit});
 			this.menuItem1.Text = "File";
 			// 
 			// MnuOpen
@@ -277,15 +277,16 @@
 			// 
 			this.MnuExit.Index = 5;
 			this.MnuExit.Text = "Exit";
+			this.MnuExit.Click += new System.EventHandler(this.MenuExit_Click);
 			// 
 			// menuItem3
 			// 
 			this.menuItem3.Index = 1;
 			this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.MnuUndo,
-            this.MnuRedo,
-            this.menuItem9,
-            this.MnuSearch});
+			this.MnuUndo,
+			this.MnuRedo,
+			this.menuItem9,
+			this.MnuSearch});
 			this.menuItem3.Text = "Edit";
 			// 
 			// MnuUndo
@@ -318,7 +319,7 @@
 			// 
 			this.menuItem2.Index = 2;
 			this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.MnuAbout});
+			this.MnuAbout});
 			this.menuItem2.Text = "?";
 			// 
 			// MnuAbout

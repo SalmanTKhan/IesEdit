@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IesEdit", "IesEdit\IesEdit.csproj", "{12F7E1ED-2EED-4204-93B8-187CD1336D73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IesEditCMD", "IesEditCMD\IesEditCMD.csproj", "{46F364F4-4805-46B4-8839-67A9EDA3D9C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{12F7E1ED-2EED-4204-93B8-187CD1336D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12F7E1ED-2EED-4204-93B8-187CD1336D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12F7E1ED-2EED-4204-93B8-187CD1336D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46F364F4-4805-46B4-8839-67A9EDA3D9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46F364F4-4805-46B4-8839-67A9EDA3D9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46F364F4-4805-46B4-8839-67A9EDA3D9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46F364F4-4805-46B4-8839-67A9EDA3D9C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
