@@ -51,6 +51,7 @@
 			this.MnuSave = new System.Windows.Forms.MenuItem();
 			this.MnuSaveAsIes = new System.Windows.Forms.MenuItem();
 			this.MnuSaveAsXml = new System.Windows.Forms.MenuItem();
+			this.MnuSaveAsTsv = new System.Windows.Forms.MenuItem();
 			this.menuItem5 = new System.Windows.Forms.MenuItem();
 			this.MnuExit = new System.Windows.Forms.MenuItem();
 			this.menuItem3 = new System.Windows.Forms.MenuItem();
@@ -60,6 +61,7 @@
 			this.MnuSearch = new System.Windows.Forms.MenuItem();
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.MnuAbout = new System.Windows.Forms.MenuItem();
+			this.MnuOpenAsTsv = new System.Windows.Forms.MenuItem();
 			this.ToolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SplMain)).BeginInit();
 			this.SplMain.Panel1.SuspendLayout();
@@ -93,13 +95,13 @@
 			// 
 			this.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.BtnOpen,
-			this.BtnSave,
-			this.toolStripSeparator1,
-			this.BtnUndo,
-			this.BtnRedo,
-			this.toolStripSeparator2,
-			this.BtnSearch});
+            this.BtnOpen,
+            this.BtnSave,
+            this.toolStripSeparator1,
+            this.BtnUndo,
+            this.BtnRedo,
+            this.toolStripSeparator2,
+            this.BtnSearch});
 			this.ToolStrip.Location = new System.Drawing.Point(0, 0);
 			this.ToolStrip.Name = "ToolStrip";
 			this.ToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -207,8 +209,8 @@
 			// StatusStrip
 			// 
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.LblCurLine,
-			this.LblCurCol});
+            this.LblCurLine,
+            this.LblCurCol});
 			this.StatusStrip.Location = new System.Drawing.Point(0, 668);
 			this.StatusStrip.Name = "StatusStrip";
 			this.StatusStrip.Size = new System.Drawing.Size(1052, 24);
@@ -222,20 +224,22 @@
 			// MainMenu
 			// 
 			this.MainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.menuItem1,
-			this.menuItem3,
-			this.menuItem2});
+            this.menuItem1,
+            this.menuItem3,
+            this.menuItem2});
 			// 
 			// menuItem1
 			// 
 			this.menuItem1.Index = 0;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.MnuOpen,
-			this.MnuSave,
-			this.MnuSaveAsIes,
-			this.MnuSaveAsXml,
-			this.menuItem5,
-			this.MnuExit});
+            this.MnuOpen,
+            this.MnuOpenAsTsv,
+            this.MnuSave,
+            this.MnuSaveAsIes,
+            this.MnuSaveAsXml,
+            this.MnuSaveAsTsv,
+            this.menuItem5,
+            this.MnuExit});
 			this.menuItem1.Text = "File";
 			// 
 			// MnuOpen
@@ -248,7 +252,7 @@
 			// MnuSave
 			// 
 			this.MnuSave.Enabled = false;
-			this.MnuSave.Index = 1;
+			this.MnuSave.Index = 2;
 			this.MnuSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.MnuSave.Text = "Save";
 			this.MnuSave.Click += new System.EventHandler(this.BtnSave_Click);
@@ -256,7 +260,7 @@
 			// MnuSaveAsIes
 			// 
 			this.MnuSaveAsIes.Enabled = false;
-			this.MnuSaveAsIes.Index = 2;
+			this.MnuSaveAsIes.Index = 3;
 			this.MnuSaveAsIes.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftS;
 			this.MnuSaveAsIes.Text = "Save as IES...";
 			this.MnuSaveAsIes.Click += new System.EventHandler(this.MnuSaveAsIes_Click);
@@ -264,18 +268,24 @@
 			// MnuSaveAsXml
 			// 
 			this.MnuSaveAsXml.Enabled = false;
-			this.MnuSaveAsXml.Index = 3;
+			this.MnuSaveAsXml.Index = 4;
 			this.MnuSaveAsXml.Text = "Save as XML...";
 			this.MnuSaveAsXml.Click += new System.EventHandler(this.MnuSaveAsXml_Click);
 			// 
+			// MnuSaveAsTsv
+			// 
+			this.MnuSaveAsTsv.Index = 5;
+			this.MnuSaveAsTsv.Text = "Save as TSV...";
+			this.MnuSaveAsTsv.Click += new System.EventHandler(this.MnuSaveAsTsv_Click);
+			// 
 			// menuItem5
 			// 
-			this.menuItem5.Index = 4;
+			this.menuItem5.Index = 6;
 			this.menuItem5.Text = "-";
 			// 
 			// MnuExit
 			// 
-			this.MnuExit.Index = 5;
+			this.MnuExit.Index = 7;
 			this.MnuExit.Text = "Exit";
 			this.MnuExit.Click += new System.EventHandler(this.MenuExit_Click);
 			// 
@@ -283,10 +293,10 @@
 			// 
 			this.menuItem3.Index = 1;
 			this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.MnuUndo,
-			this.MnuRedo,
-			this.menuItem9,
-			this.MnuSearch});
+            this.MnuUndo,
+            this.MnuRedo,
+            this.menuItem9,
+            this.MnuSearch});
 			this.menuItem3.Text = "Edit";
 			// 
 			// MnuUndo
@@ -319,7 +329,7 @@
 			// 
 			this.menuItem2.Index = 2;
 			this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.MnuAbout});
+            this.MnuAbout});
 			this.menuItem2.Text = "?";
 			// 
 			// MnuAbout
@@ -327,6 +337,12 @@
 			this.MnuAbout.Index = 0;
 			this.MnuAbout.Text = "About";
 			this.MnuAbout.Click += new System.EventHandler(this.MnuAbout_Click);
+			// 
+			// MnuOpenAsTsv
+			// 
+			this.MnuOpenAsTsv.Index = 1;
+			this.MnuOpenAsTsv.Text = "Open TSV...";
+			this.MnuOpenAsTsv.Click += new System.EventHandler(this.MnuOpenAsTsv_Click);
 			// 
 			// FrmMain
 			// 
@@ -390,6 +406,8 @@
 		private ScintillaNET.Scintilla TxtEditor;
 		private System.Windows.Forms.MenuItem MnuSaveAsIes;
 		private System.Windows.Forms.MenuItem MnuSaveAsXml;
+		private System.Windows.Forms.MenuItem MnuSaveAsTsv;
+		private System.Windows.Forms.MenuItem MnuOpenAsTsv;
 	}
 }
 

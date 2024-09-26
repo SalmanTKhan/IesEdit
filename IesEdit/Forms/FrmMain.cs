@@ -225,6 +225,7 @@ namespace IesEdit
 		/// <param name="e"></param>
 		private void BtnOpen_Click(object sender, EventArgs e)
 		{
+			this.OpenFileDialog.Filter = "IES File|*.ies";
 			var result = this.OpenFileDialog.ShowDialog();
 			if (result != DialogResult.OK)
 				return;
@@ -391,8 +392,16 @@ namespace IesEdit
 		{
 			try
 			{
-				var iesFile = IesFile.LoadIesFile(filePath);
-				var text = iesFile.GetXml();
+				var text = "";
+				if (filePath.EndsWith(".tsv"))
+				{
+					text = XmlTsvConverter.TsvToXml(filePath);
+				}
+				else
+				{
+					var iesFile = IesFile.LoadIesFile(filePath);
+					text = iesFile.GetXml();
+				}
 
 				this.TxtEditor.Text = text;
 
@@ -421,6 +430,11 @@ namespace IesEdit
 				{
 					var text = this.TxtEditor.Text;
 					File.WriteAllText(filePath, text);
+				}
+				else if (filePath.EndsWith(".tsv"))
+				{
+					var text = this.TxtEditor.Text;
+					XmlTsvConverter.XmlToTsv(text, filePath);
 				}
 				else
 				{
@@ -478,6 +492,30 @@ namespace IesEdit
 			this.TxtEditor.ScrollRange(nextIndex + selectLength, nextIndex);
 
 			return true;
+		}
+
+		private void MnuOpenAsTsv_Click(object sender, EventArgs e)
+		{
+			this.OpenFileDialog.Filter = "TSV File|*.tsv";
+			var result = this.OpenFileDialog.ShowDialog();
+			if (result != DialogResult.OK)
+				return;
+
+			this.OpenFile(OpenFileDialog.FileName);
+		}
+
+		private void MnuSaveAsTsv_Click(object sender, EventArgs e)
+		{
+			var fileName = Path.GetFileNameWithoutExtension(_openedFilePath) + ".tsv";
+
+			this.SaveFileDialog.InitialDirectory = Path.GetDirectoryName(_openedFilePath);
+			this.SaveFileDialog.FileName = fileName;
+			this.SaveFileDialog.Filter = "TSV Files (*.tsv)|*.tsv";
+
+			if (this.SaveFileDialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			this.SaveFile(this.SaveFileDialog.FileName);
 		}
 	}
 }
