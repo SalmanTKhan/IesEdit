@@ -45,7 +45,7 @@ namespace IesEdit
 					{
 						if (args.Length < 3)
 						{
-							Console.WriteLine("Usage: iesedit -c <input.xml> <output.ies>");
+							Console.WriteLine("Usage: iesedit -c <input.ies> <output.xml>");
 							return;
 						}
 						ConvertIesToXml(args[1], args[2]);
@@ -72,12 +72,6 @@ namespace IesEdit
 
 		static void ConvertXmlToIes(string xmlFilePath, string iesFilePath)
 		{
-			if (!File.Exists(xmlFilePath))
-			{
-				Console.WriteLine($"File not found: {xmlFilePath}");
-				return;
-			}
-
 			try
 			{
 				var iesFile = IesFile.LoadXmlFile(xmlFilePath);
@@ -111,22 +105,16 @@ namespace IesEdit
 
 		static void ConvertIesToXml(string iesFilePath, string xmlFilePath)
 		{
-			if (!File.Exists(xmlFilePath))
-			{
-				Console.WriteLine($"File not found: {xmlFilePath}");
-				return;
-			}
-
 			try
 			{
-				var iesFile = IesFile.LoadXmlFile(xmlFilePath);
-				iesFile.SaveIes(iesFilePath);
+				var iesFile = IesFile.LoadIesFile(iesFilePath);
+				iesFile.SaveXml(xmlFilePath);
 
-				Console.WriteLine($"Converted {xmlFilePath} to {iesFilePath}");
+				Console.WriteLine($"Converted {iesFilePath} to {xmlFilePath}");
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Error converting {xmlFilePath}: {ex.Message}");
+				Console.WriteLine($"Error converting {iesFilePath}: {ex.Message}");
 			}
 		}
 
