@@ -604,13 +604,13 @@ namespace IesEdit.Ies
 		public void SaveXml(string filePath)
 		{
 			var dataFilePath = filePath;
-			var headerFilePath = Path.ChangeExtension(dataFilePath, ".info.xml");
+			//var headerFilePath = Path.ChangeExtension(dataFilePath, ".info.xml");
 
 			using (var fs = new FileStream(dataFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
 				this.WriteXmlData(fs);
 
-			using (var fs = new FileStream(headerFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
-				this.WriteXmlInfo(fs);
+			//using (var fs = new FileStream(headerFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+			//	this.WriteXmlInfo(fs);
 		}
 
 		/// <summary>
