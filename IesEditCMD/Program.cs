@@ -11,8 +11,8 @@ namespace IesEdit
 		{
 			if (args.Length == 0)
 			{
-				Console.WriteLine("Usage XML to IES: iesedit -c <input.xml> <output.ies> | -d <folder> [-r]");
-				Console.WriteLine("Usage IES to XML: iesedit -x <input.xml> <output.ies> | -dx <folder> [-r]");
+				Console.WriteLine("Usage XML to IES: iesedit -c <input.xml> <output.ies> | -d <folder> [-r] [output folder]");
+				Console.WriteLine("Usage IES to XML: iesedit -x <input.ies> <output.xml> | -dx <folder> [-r] [output folder]");
 				return;
 			}
 
@@ -33,19 +33,20 @@ namespace IesEdit
 					{
 						if (args.Length < 2)
 						{
-							Console.WriteLine("Usage: iesedit -d <folder> [-r]");
+							Console.WriteLine("Usage: iesedit -d <input folder> [-r] [output folder]");
 							return;
 						}
 
 						var recursive = args.Length > 2 && args[2] == "-r";
-						ConvertAllXmlInDirectory(args[1], recursive);
+						var outputFolder = (args.Length > 3) ? args[3] : null;
+						ConvertAllXmlInDirectory(args[1], recursive, outputFolder);
 						break;
 					}
 				case "-x":
 					{
 						if (args.Length < 3)
 						{
-							Console.WriteLine("Usage: iesedit -c <input.ies> <output.xml>");
+							Console.WriteLine("Usage: iesedit -x <input.ies> <output.xml>");
 							return;
 						}
 						ConvertIesToXml(args[1], args[2]);
@@ -55,17 +56,18 @@ namespace IesEdit
 					{
 						if (args.Length < 2)
 						{
-							Console.WriteLine("Usage: iesedit -d <folder> [-r]");
+							Console.WriteLine("Usage: iesedit -dx <input folder> [-r] [output folder]");
 							return;
 						}
 
 						var recursive = args.Length > 2 && args[2] == "-r";
-						ConvertAllIesInDirectory(args[1], recursive);
+						var outputFolder = (args.Length > 3) ? args[3] : null;
+						ConvertAllIesInDirectory(args[1], recursive, outputFolder);
 						break;
 					}
 
 				default:
-					Console.WriteLine("Invalid option. Usage: iesedit -c <input.xml> <output.ies> | -d <folder> [-r]");
+					Console.WriteLine("Invalid option. Usage: iesedit -c <input.xml> <output.ies> | -d <input folder> [-r] [output folder]");
 					break;
 			}
 		}
@@ -85,7 +87,7 @@ namespace IesEdit
 			}
 		}
 
-		static void ConvertAllXmlInDirectory(string directoryPath, bool recursive)
+		static void ConvertAllXmlInDirectory(string directoryPath, bool recursive, string outputFolder)
 		{
 			if (!Directory.Exists(directoryPath))
 			{
@@ -98,7 +100,13 @@ namespace IesEdit
 
 			foreach (var xmlFile in xmlFiles)
 			{
-				var iesFilePath = Path.ChangeExtension(xmlFile, ".ies");
+				var outputDirectory = outputFolder ?? Path.GetDirectoryName(xmlFile);
+				if (!Directory.Exists(outputDirectory))
+				{
+					Directory.CreateDirectory(outputDirectory);
+				}
+
+				var iesFilePath = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(xmlFile) + ".ies");
 				ConvertXmlToIes(xmlFile, iesFilePath);
 			}
 		}
@@ -118,7 +126,7 @@ namespace IesEdit
 			}
 		}
 
-		static void ConvertAllIesInDirectory(string directoryPath, bool recursive)
+		static void ConvertAllIesInDirectory(string directoryPath, bool recursive, string outputFolder)
 		{
 			if (!Directory.Exists(directoryPath))
 			{
@@ -131,7 +139,12 @@ namespace IesEdit
 
 			foreach (var iesFile in iesFiles)
 			{
-				var xmlFilePath = Path.ChangeExtension(iesFile, ".xml");
+				var outputDirectory = outputFolder ?? Path.GetDirectoryName(iesFile);
+				if (!Directory.Exists(outputDirectory))
+				{
+					Directory.CreateDirectory(outputDirectory);
+				}
+				var xmlFilePath = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(iesFile) + ".xml");
 				ConvertIesToXml(iesFile, xmlFilePath);
 			}
 		}
