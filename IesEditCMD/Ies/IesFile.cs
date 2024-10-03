@@ -670,20 +670,27 @@ namespace IesEdit.Ies
 								//if (field.Key == "ClassID" || field.Key == "ClassName")
 								//	continue;
 
-								if (field.Value is float floatValue)
+								if (field.Value is float floatValue || (field.Value is IConvertible && ((IConvertible)field.Value).GetTypeCode() != TypeCode.String))
 								{
-									if (floatValue != 0)
-										writer.WriteAttributeString(field.Key, floatValue.ToString("F2", CultureInfo.InvariantCulture));
+									float value = Convert.ToSingle(field.Value);
+									if (Math.Abs(value) >= 0.01f)
+									{
+										string formattedValue = value.ToString("F2", CultureInfo.InvariantCulture);
+										if (formattedValue.EndsWith(".00"))
+										{
+											formattedValue = formattedValue.Substring(0, formattedValue.Length - 3);
+										}
+										writer.WriteAttributeString(field.Key, formattedValue);
+									}
 									else
-										writer.WriteAttributeString(field.Key, DefaultNumber.ToString("F2", CultureInfo.InvariantCulture));
+									{
+										writer.WriteAttributeString(field.Key, "0");
+									}
 								}
 								else
 								{
-									var stringValue = field.Value.ToString();
-									if (stringValue.Length > 0)
-										writer.WriteAttributeString(field.Key, field.Value.ToString());
-									else
-										writer.WriteAttributeString(field.Key, DefaultString);
+									var stringValue = field.Value?.ToString() ?? "";
+									writer.WriteAttributeString(field.Key, stringValue.Length > 0 ? stringValue : DefaultString);
 								}
 							}
 							writer.WriteEndElement();
