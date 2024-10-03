@@ -673,9 +673,9 @@ namespace IesEdit.Ies
 								if (field.Value is float floatValue)
 								{
 									if (floatValue != 0)
-										writer.WriteAttributeString(field.Key, floatValue.ToString("G17", CultureInfo.InvariantCulture));
+										writer.WriteAttributeString(field.Key, floatValue.ToString("F2", CultureInfo.InvariantCulture));
 									else
-										writer.WriteAttributeString(field.Key, DefaultNumber.ToString("G17", CultureInfo.InvariantCulture));
+										writer.WriteAttributeString(field.Key, DefaultNumber.ToString("F2", CultureInfo.InvariantCulture));
 								}
 								else
 								{
