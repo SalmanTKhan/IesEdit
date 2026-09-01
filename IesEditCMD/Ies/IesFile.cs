@@ -191,7 +191,7 @@ namespace IesEdit.Ies
 								throw new InvalidDataException(string.Format("Expected numeric value for attribute '{0}' in '{1}@{2}:{3}'.", key, fileName, lineInfo.LineNumber, lineInfo.LinePosition));
 							}
 
-							row.Add(key, float.Parse(attr.Value));
+							row.Add(key, float.Parse(attr.Value, NumberStyles.Float, CultureInfo.InvariantCulture));
 						}
 						else
 						{
@@ -201,7 +201,7 @@ namespace IesEdit.Ies
 					}
 
 					if (key == "ClassID")
-						row.ClassId = int.Parse(attr.Value);
+						row.ClassId = int.Parse(attr.Value, NumberStyles.Integer, CultureInfo.InvariantCulture);
 					else if (key == "ClassName")
 						row.ClassName = attr.Value;
 				}
@@ -404,6 +404,41 @@ namespace IesEdit.Ies
 
 			return value.All(a => a == ' ' || a == '.' || (a >= '0' && a <= '9'));
 		}
+
+		/// <summary>
+		/// Formats a number for the XML representation.
+		/// </summary>
+		/// <remarks>
+		/// Two decimals are used whenever that representation reads back as the
+		/// exact same float, which keeps the output identical to what earlier
+		/// versions produced for all but a handful of values. Values that would
+		/// lose precision that way (and values below 0.01, which used to be
+		/// flattened to "0") get the shortest representation that round-trips
+		/// instead, so ies -> xml -> ies does not lose data.
+		///
+		/// Always written with the invariant culture, and parsed back with the
+		/// invariant culture as well, so the result never depends on the
+		/// machine's regional settings.
+		/// </remarks>
+		/// <param name="value"></param>
+		private static string FormatNumber(float value)
+		{
+			if (value == 0f)
+				return "0";
+
+			var formatted = value.ToString("F2", CultureInfo.InvariantCulture);
+
+			if (float.TryParse(formatted, NumberStyles.Float, CultureInfo.InvariantCulture, out var roundTripped) && roundTripped == value)
+			{
+				if (formatted.EndsWith(".00"))
+					formatted = formatted.Substring(0, formatted.Length - 3);
+
+				return formatted;
+			}
+
+			return value.ToString("R", CultureInfo.InvariantCulture);
+		}
+
 
 		/// <summary>
 		/// Reads header from binary reader into this instance.
@@ -673,19 +708,7 @@ namespace IesEdit.Ies
 								if (field.Value is float floatValue || (field.Value is IConvertible && ((IConvertible)field.Value).GetTypeCode() != TypeCode.String))
 								{
 									float value = Convert.ToSingle(field.Value);
-									if (Math.Abs(value) >= 0.01f)
-									{
-										string formattedValue = value.ToString("F2", CultureInfo.InvariantCulture);
-										if (formattedValue.EndsWith(".00"))
-										{
-											formattedValue = formattedValue.Substring(0, formattedValue.Length - 3);
-										}
-										writer.WriteAttributeString(field.Key, formattedValue);
-									}
-									else
-									{
-										writer.WriteAttributeString(field.Key, "0");
-									}
+									writer.WriteAttributeString(field.Key, FormatNumber(value));
 								}
 								else
 								{
